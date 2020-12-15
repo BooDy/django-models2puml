@@ -8,16 +8,17 @@ For more information about the PlantUML tool and text format https://plantuml.co
 
 ## Installation & usage
 
-1. to use the application first you need to install it in your environment using pip
-
-pip install django_modesl2puml
+1. to use the application first you need to install it in your environment using pip:
+```
+pip install django-models2puml
+```
 
 2. Add the application to your settings INSTALLED_APPS:
 
 ```
     INSTALLED_APPS = [
         ...
-        'django_models2puml',
+        'models2puml',
     ]
 ```
 

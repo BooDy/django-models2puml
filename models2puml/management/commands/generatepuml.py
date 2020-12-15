@@ -1,9 +1,7 @@
-import inspect
 from django.core.management.base import BaseCommand, CommandError
-from django_models2puml.utils import (validate_django_model,
-                              get_model_parent,
-                              _render_class)
+from models2puml.utils import validate_django_model, _render_class
 from django.conf import settings
+
 
 class Command(BaseCommand):
     help = 'Generate plantUML description of installed apps models'
@@ -18,12 +16,16 @@ class Command(BaseCommand):
                             help="Path and name to a text file where the\
                             output of the command will be written to.\
                             Defaults to outputing to stdout.")
+
     def handle(self, *args, **options):
 
         apps = options['apps']
         if apps == '*':
-            #load all installed apps from the django settings.
-            self.stdout.write(self.style.WARNING('The output plantUML might not be rendered properly if the number of models is too big'))
+            # load all installed apps from the django settings.
+            self.stdout.write(self.style.WARNING('The output plantUML might \
+                                                 not be rendered properly if \
+                                                 the number of models is too \
+                                                 big'))
             apps = settings.INSTALLED_APPS
         rel_fields = ['ForeignKey', 'ManyToManyField', 'OneToOneField']
         result = {}
@@ -45,7 +47,9 @@ class Command(BaseCommand):
                         for field in fields:
                             result[app][attr]['fields'][field.name] = field.__class__.__name__
                             if field.__class__.__name__ in rel_fields:
-                                result[app][attr]['rel'].append(field.remote_field.model.__name__)
+                                result[app][attr]['rel'].append(
+                                    field.remote_field.model.__name__
+                                )
                 except Exception as e:
                     raise CommandError('Model %s is fucked up: %s' % (attrib, e
                                                                       ))
